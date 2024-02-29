@@ -34,4 +34,10 @@ public class AuthServiceImpl implements AuthService{
         userDto.setId(createdUser.getId());
         return userDto;
     }
+
+    //Este metodo es para que no se repitan usuarios con el mismo email
+    @Override
+    public boolean hasClienteWithEmail(String email) {
+        return false;
+    }
 }
