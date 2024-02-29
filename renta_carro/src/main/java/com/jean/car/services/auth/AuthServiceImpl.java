@@ -38,6 +38,7 @@ public class AuthServiceImpl implements AuthService{
     //Este metodo es para que no se repitan usuarios con el mismo email
     @Override
     public boolean hasClienteWithEmail(String email) {
-        return false;
+        //Aqui vemos si el email esta presente
+        return userRepository.findFirstByEmail(email).isPresent();
     }
 }

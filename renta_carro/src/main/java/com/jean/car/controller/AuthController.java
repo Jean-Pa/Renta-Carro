@@ -22,6 +22,10 @@ public class AuthController {
     //Metodo para registrarse, mandamos el cuerpo con
     @PostMapping("/signup")
     public ResponseEntity<?> signupCliente(@RequestBody SignupRequest signupRequest){
+
+        if(authService.hasClienteWithEmail(signupRequest.getEmail()))
+            return new ResponseEntity<>("Cliente con el email ya existe",HttpStatus.NOT_ACCEPTABLE);
+
         UserDto createdClienteDto= authService.createCliente(signupRequest);
 
         if(createdClienteDto==null){
