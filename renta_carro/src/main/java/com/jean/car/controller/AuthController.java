@@ -22,15 +22,20 @@ public class AuthController {
     //Metodo para registrarse, mandamos el cuerpo con
     @PostMapping("/signup")
     public ResponseEntity<?> signupCliente(@RequestBody SignupRequest signupRequest){
-
+        //Si el cliente ya existe con ese email le manda error
         if(authService.hasClienteWithEmail(signupRequest.getEmail()))
             return new ResponseEntity<>("Cliente con el email ya existe",HttpStatus.NOT_ACCEPTABLE);
 
+        //Traemos los parametros mediante el dto para poder crear el cliente, con el parametro de signupRequest
+        //para traer los requisitos para crear al cliente
         UserDto createdClienteDto= authService.createCliente(signupRequest);
 
+        //Si los espacios viene alguno vacio el cliente no se va crear, en todo caso cumpla los parametros
+        //retorna que el cliente creado
         if(createdClienteDto==null){
             return new ResponseEntity<>("Cliente no creado, intente de nuevo", HttpStatus.BAD_REQUEST);
         }
+        //Retorna el cliente creado
         return new ResponseEntity<>(createdClienteDto,HttpStatus.CREATED);
     }
 }
